@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GRIVION — Denim</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --red:      #C41E1E;
+      --red-dark: #8B0000;
+      --black:    #080808;
+      --offblack: #111111;
+      --white:    #F5F5F5;
+      --grey:     #888888;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Space Grotesk', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 48px;
+      background: linear-gradient(to bottom, rgba(8,8,8,0.92) 0%, transparent 100%);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .nav-logo img {
+      height: 34px;
+      width: auto;
+    }
+
+    .nav-brand {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 5px;
+      color: var(--white);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--grey);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 110%, rgba(196,30,30,0.18) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-hands-bg {
+      position: absolute;
+      bottom: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 680px;
+      opacity: 0.09;
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .hero-logo {
+      width: 82px;
+      margin-bottom: 24px;
+      animation: float 5s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(-1deg); }
+      50%       { transform: translateY(-10px) rotate(1deg); }
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(72px, 14vw, 170px);
+      letter-spacing: 14px;
+      line-height: 0.88;
+      color: var(--white);
+    }
+
+    .hero-title .accent { color: var(--red); }
+
+    .hero-subtitle {
+      font-size: 12px;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-top: 22px;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      margin-top: 52px;
+      padding: 15px 52px;
+      border: 1px solid var(--red);
+      color: var(--white);
+      text-decoration: none;
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    .hero-cta:hover { background: var(--red); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--grey);
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .hero-scroll::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 48px;
+      background: var(--grey);
+      animation: scrollLine 1.6s ease-in-out infinite;
+    }
+
+    @keyframes scrollLine {
+      0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+      50%       { opacity: 1;   transform: scaleY(1);   }
+    }
+
+    /* ─── TICKER ─── */
+    .ticker {
+      background: var(--red);
+      padding: 13px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .ticker-track {
+      display: inline-flex;
+      animation: ticker 22s linear infinite;
+    }
+
+    .ticker-track span {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 17px;
+      letter-spacing: 4px;
+      padding: 0 36px;
+    }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ─── SHARED ─── */
+    section { padding: 120px 48px; }
+
+    .label {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 14px;
+    }
+
+    .h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(44px, 6vw, 78px);
+      letter-spacing: 3px;
+      line-height: 1;
+    }
+
+    /* ─── COLLECTION ─── */
+    #collection {
+      background: var(--offblack);
+    }
+
+    .collection-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 64px;
+    }
+
+    .collection-desc {
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--grey);
+      max-width: 260px;
+      text-align: right;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+    }
+
+    .product-card {
+      position: relative;
+      background: #0d0d0d;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .product-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(139,0,0,0.65) 0%, transparent 55%);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .product-card:hover::after { opacity: 1; }
+
+    .product-card img {
+      width: 100%;
+      aspect-ratio: 2/3;
+      object-fit: contain;
+      padding: 28px 20px;
+      background: #0d0d0d;
+      display: block;
+      transition: transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .product-card:hover img { transform: scale(1.05); }
+
+    .product-meta {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 24px;
+      z-index: 2;
+      transform: translateY(56px);
+      transition: transform 0.4s;
+    }
+
+    .product-card:hover .product-meta { transform: translateY(0); }
+
+    .product-edition {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+    }
+
+    .product-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 26px;
+      letter-spacing: 3px;
+      margin-top: 4px;
+    }
+
+    .product-cta {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 9px 22px;
+      background: var(--red);
+      color: var(--white);
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* ─── LOOKBOOK ─── */
+    #lookbook { background: var(--black); }
+
+    .lookbook-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-top: 64px;
+    }
+
+    .lookbook-card { position: relative; overflow: hidden; }
+
+    .lookbook-card img {
+      width: 100%;
+      aspect-ratio: 2/3;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      filter: grayscale(15%) contrast(1.08);
+      transition: transform 0.65s ease;
+    }
+
+    .lookbook-card:hover img { transform: scale(1.04); }
+
+    .lookbook-badge {
+      position: absolute;
+      top: 20px; left: 20px;
+      background: var(--red);
+      padding: 6px 14px;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .lookbook-cap {
+      margin-top: 18px;
+    }
+
+    .lookbook-cap h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      letter-spacing: 3px;
+    }
+
+    .lookbook-cap p {
+      font-size: 12px;
+      color: var(--grey);
+      letter-spacing: 1.5px;
+      margin-top: 5px;
+    }
+
+    /* ─── STATS ─── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      padding: 0;
+    }
+
+    .stat-item {
+      background: var(--red-dark);
+      padding: 64px 40px;
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .stat-item:last-child { border-right: none; }
+
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 80px;
+      line-height: 1;
+      color: var(--white);
+    }
+
+    .stat-label {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-top: 10px;
+    }
+
+    /* ─── FEATURE ─── */
+    .feature {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 620px;
+      padding: 0;
+    }
+
+    .feature-img {
+      overflow: hidden;
+    }
+
+    .feature-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: sepia(0.25) hue-rotate(315deg) saturate(1.6) brightness(0.85);
+      transition: transform 0.8s ease;
+    }
+
+    .feature:hover .feature-img img { transform: scale(1.04); }
+
+    .feature-body {
+      background: var(--offblack);
+      padding: 80px 68px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .feature-body .h2 { margin-bottom: 24px; }
+
+    .feature-body p {
+      font-size: 15px;
+      line-height: 1.85;
+      color: var(--grey);
+      max-width: 420px;
+      margin-bottom: 40px;
+    }
+
+    .btn-red {
+      display: inline-block;
+      padding: 14px 40px;
+      background: var(--red);
+      color: var(--white);
+      text-decoration: none;
+      font-size: 11px;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      width: fit-content;
+      transition: background 0.3s;
+    }
+
+    .btn-red:hover { background: var(--red-dark); }
+
+    /* ─── ABOUT ─── */
+    #about {
+      background: var(--black);
+      text-align: center;
+      padding: 160px 48px;
+    }
+
+    #about .h2 {
+      font-size: clamp(52px, 9vw, 110px);
+      max-width: 880px;
+      margin: 16px auto 0;
+      line-height: 0.92;
+    }
+
+    #about .h2 .accent { color: var(--red); }
+
+    #about p {
+      font-size: 16px;
+      line-height: 1.9;
+      color: var(--grey);
+      max-width: 580px;
+      margin: 40px auto 0;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--offblack);
+      padding: 80px 48px 36px;
+      border-top: 1px solid #1c1c1c;
+    }
+
+    .footer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 56px;
+    }
+
+    .footer-logo img { height: 44px; }
+
+    .footer-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: var(--grey);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .footer-links a:hover { color: var(--white); }
+
+    .footer-social { display: flex; gap: 18px; }
+
+    .footer-social a {
+      color: var(--grey);
+      text-decoration: none;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .footer-social a:hover { color: var(--red); }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 36px;
+      border-top: 1px solid #1c1c1c;
+    }
+
+    .footer-copy {
+      font-size: 11px;
+      color: #444;
+      letter-spacing: 1px;
+    }
+
+    .footer-tagline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 15px;
+      letter-spacing: 5px;
+      color: var(--red);
+    }
+
+    /* ─── REVEAL ANIMATION ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.85s ease, transform 0.85s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 18px 24px; }
+      .nav-links { display: none; }
+      section { padding: 80px 24px; }
+      .collection-head { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .collection-desc { text-align: left; max-width: 100%; }
+      .product-grid { grid-template-columns: 1fr; }
+      .lookbook-grid { grid-template-columns: 1fr; gap: 32px; }
+      .stats { grid-template-columns: 1fr; }
+      .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); }
+      .feature { grid-template-columns: 1fr; }
+      .feature-img { height: 360px; }
+      .feature-body { padding: 56px 28px; }
+      #about { padding: 100px 24px; }
+      .footer-row { flex-direction: column; gap: 28px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <img src="logo.png" alt="Grivion">
+    <span class="nav-brand">GRIVION</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#collection">Collection</a></li>
+    <li><a href="#lookbook">Lookbook</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <img
+    class="hero-hands-bg"
+    src="../BRAND/jeans mani/Gemini_Generated_Image_ydkrwrydkrwrydkr.png"
+    alt=""
+    aria-hidden="true"
+  >
+  <div class="hero-content reveal">
+    <img class="hero-logo" src="logo.png" alt="Grivion Logo">
+    <h1 class="hero-title">GRI<span class="accent">VI</span>ON</h1>
+    <p class="hero-subtitle">Denim — SS 2025 Collection</p>
+    <a href="#collection" class="hero-cta">Explore the Drop</a>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>GRIVION DENIM</span><span>★</span>
+    <span>SS 2025</span><span>★</span>
+    <span>LIMITED EDITION</span><span>★</span>
+    <span>HANDCRAFTED GRAPHICS</span><span>★</span>
+    <span>WIDE LEG SILHOUETTE</span><span>★</span>
+    <span>GRIVION DENIM</span><span>★</span>
+    <span>SS 2025</span><span>★</span>
+    <span>LIMITED EDITION</span><span>★</span>
+    <span>HANDCRAFTED GRAPHICS</span><span>★</span>
+    <span>WIDE LEG SILHOUETTE</span><span>★</span>
+  </div>
+</div>
+
+<!-- COLLECTION -->
+<section id="collection">
+  <div class="collection-head reveal">
+    <div>
+      <p class="label">SS 2025</p>
+      <h2 class="h2">The Drop</h2>
+    </div>
+    <p class="collection-desc">
+      Wide-leg silhouette. Hand-graphic denim.<br>Built to make noise.
+    </p>
+  </div>
+
+  <div class="product-grid reveal">
+    <div class="product-card">
+      <img src="../BRAND/jeans mani/primo jeans mani-01.jpg" alt="Mani Rosso — Bold Edition">
+      <div class="product-meta">
+        <p class="product-edition">Limited Drop</p>
+        <h3 class="product-name">MANI ROSSO</h3>
+        <a href="#" class="product-cta">Notify Me</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <img src="jeans.png" alt="Grivion Full Line Preview">
+      <div class="product-meta">
+        <p class="product-edition">Design Preview</p>
+        <h3 class="product-name">THE FULL LINE</h3>
+        <a href="#" class="product-cta">Notify Me</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <img src="../BRAND/jeans mani/mani jeans più scuro-02-02.jpg" alt="Mani Scuro — Shadow Edition">
+      <div class="product-meta">
+        <p class="product-edition">Shadow Edition</p>
+        <h3 class="product-name">MANI SCURO</h3>
+        <a href="#" class="product-cta">Notify Me</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOOKBOOK -->
+<section id="lookbook">
+  <div class="reveal">
+    <p class="label">Lookbook</p>
+    <h2 class="h2">Worn on the Street</h2>
+  </div>
+
+  <div class="lookbook-grid reveal">
+    <div class="lookbook-card">
+      <img src="Photo 1.png" alt="Model wearing Grivion — Look 01">
+      <span class="lookbook-badge">Look 01</span>
+      <div class="lookbook-cap">
+        <h3>LOOK 01 — MANI ROSSO</h3>
+        <p>Wide Leg Denim · Bold Hand Graphic</p>
+      </div>
+    </div>
+
+    <div class="lookbook-card">
+      <img src="Photo 2.png" alt="Model wearing Grivion — Look 02">
+      <span class="lookbook-badge">Look 02</span>
+      <div class="lookbook-cap">
+        <h3>LOOK 02 — MANI SCURO</h3>
+        <p>Shadow Edition · Subtle Depth</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats reveal">
+  <div class="stat-item">
+    <p class="stat-num">02</p>
+    <p class="stat-label">Denim Designs</p>
+  </div>
+  <div class="stat-item">
+    <p class="stat-num">01</p>
+    <p class="stat-label">Drop Season</p>
+  </div>
+  <div class="stat-item">
+    <p class="stat-num">∞</p>
+    <p class="stat-label">Statement Made</p>
+  </div>
+</div>
+
+<!-- FEATURE -->
+<div class="feature">
+  <div class="feature-img">
+    <img
+      src="../BRAND/jeans mani/Gemini_Generated_Image_roe0r7roe0r7roe0.png"
+      alt="Hands graphic — Grivion signature design"
+    >
+  </div>
+  <div class="feature-body reveal">
+    <p class="label">The Design</p>
+    <h2 class="h2">Hands From<br>The Crowd</h2>
+    <p>
+      Every pair carries the energy of the crowd. Reaching hands etched into the denim — a symbol of raw momentum, uprising, and collective power. This isn't just clothing. It's a statement woven into every thread.
+    </p>
+    <a href="#" class="btn-red">Get Notified</a>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="label reveal">The Brand</p>
+  <h2 class="h2 reveal">Built Different.<br><span class="accent">Worn</span> with Purpose.</h2>
+  <p class="reveal">
+    GRIVION is an independent denim label born from the underground. We design for those who move with intention — statement pieces that carry weight both visually and culturally. No fast fashion. No compromise. Just craft.
+  </p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-row">
+    <div class="footer-logo">
+      <img src="logo.png" alt="Grivion">
+    </div>
+    <ul class="footer-links">
+      <li><a href="#collection">Collection</a></li>
+      <li><a href="#lookbook">Lookbook</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+    <div class="footer-social">
+      <a href="#">Instagram</a>
+      <a href="#">TikTok</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 Grivion. All rights reserved.</p>
+    <p class="footer-tagline">MAKE NOISE</p>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  revealEls.forEach(el => io.observe(el));
+
+  // Immediately reveal hero
+  document.querySelector('.hero .reveal').classList.add('visible');
+</script>
+
+</body>
+</html>
