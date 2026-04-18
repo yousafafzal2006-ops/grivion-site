@@ -1,1 +1,1 @@
-{"rewrites":[{"source":"/(.*)","destination":"/Grivion.html"}]}
+{"rewrites":[{"source":"/buy","destination":"/buy.html"},{"source":"/buy.html","destination":"/buy.html"},{"source":"/(.*)","destination":"/Grivion.html"}]}

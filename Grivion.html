@@ -1,778 +1,873 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GRIVION — Denim</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --red:      #C41E1E;
-      --red-dark: #8B0000;
-      --black:    #080808;
-      --offblack: #111111;
-      --white:    #F5F5F5;
-      --grey:     #888888;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--black);
-      color: var(--white);
-      font-family: 'Space Grotesk', sans-serif;
-      overflow-x: hidden;
-    }
-
-    /* ─── NAV ─── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 24px 48px;
-      background: linear-gradient(to bottom, rgba(8,8,8,0.92) 0%, transparent 100%);
-    }
-
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-    }
-
-    .nav-logo img {
-      height: 34px;
-      width: auto;
-    }
-
-    .nav-brand {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 22px;
-      letter-spacing: 5px;
-      color: var(--white);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 40px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      color: var(--grey);
-      text-decoration: none;
-      font-size: 12px;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      transition: color 0.3s;
-    }
-
-    .nav-links a:hover { color: var(--white); }
-
-    /* ─── HERO ─── */
-    .hero {
-      position: relative;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    .hero-glow {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 70% 60% at 50% 110%, rgba(196,30,30,0.18) 0%, transparent 65%);
-      pointer-events: none;
-    }
-
-    .hero-hands-bg {
-      position: absolute;
-      bottom: -30px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 680px;
-      opacity: 0.09;
-      pointer-events: none;
-      mix-blend-mode: screen;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-    }
-
-    .hero-logo {
-      width: 82px;
-      margin-bottom: 24px;
-      animation: float 5s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px) rotate(-1deg); }
-      50%       { transform: translateY(-10px) rotate(1deg); }
-    }
-
-    .hero-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(72px, 14vw, 170px);
-      letter-spacing: 14px;
-      line-height: 0.88;
-      color: var(--white);
-    }
-
-    .hero-title .accent { color: var(--red); }
-
-    .hero-subtitle {
-      font-size: 12px;
-      letter-spacing: 6px;
-      text-transform: uppercase;
-      color: var(--grey);
-      margin-top: 22px;
-    }
-
-    .hero-cta {
-      display: inline-block;
-      margin-top: 52px;
-      padding: 15px 52px;
-      border: 1px solid var(--red);
-      color: var(--white);
-      text-decoration: none;
-      font-size: 11px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      transition: background 0.3s, border-color 0.3s;
-    }
-
-    .hero-cta:hover { background: var(--red); }
-
-    .hero-scroll {
-      position: absolute;
-      bottom: 32px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      color: var(--grey);
-      font-size: 10px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-    }
-
-    .hero-scroll::after {
-      content: '';
-      display: block;
-      width: 1px;
-      height: 48px;
-      background: var(--grey);
-      animation: scrollLine 1.6s ease-in-out infinite;
-    }
-
-    @keyframes scrollLine {
-      0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
-      50%       { opacity: 1;   transform: scaleY(1);   }
-    }
-
-    /* ─── TICKER ─── */
-    .ticker {
-      background: var(--red);
-      padding: 13px 0;
-      overflow: hidden;
-      white-space: nowrap;
-    }
-
-    .ticker-track {
-      display: inline-flex;
-      animation: ticker 22s linear infinite;
-    }
-
-    .ticker-track span {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 17px;
-      letter-spacing: 4px;
-      padding: 0 36px;
-    }
-
-    @keyframes ticker {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
-
-    /* ─── SHARED ─── */
-    section { padding: 120px 48px; }
-
-    .label {
-      font-size: 10px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--red);
-      margin-bottom: 14px;
-    }
-
-    .h2 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(44px, 6vw, 78px);
-      letter-spacing: 3px;
-      line-height: 1;
-    }
-
-    /* ─── COLLECTION ─── */
-    #collection {
-      background: var(--offblack);
-    }
-
-    .collection-head {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      margin-bottom: 64px;
-    }
-
-    .collection-desc {
-      font-size: 14px;
-      line-height: 1.75;
-      color: var(--grey);
-      max-width: 260px;
-      text-align: right;
-    }
-
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 3px;
-    }
-
-    .product-card {
-      position: relative;
-      background: #0d0d0d;
-      overflow: hidden;
-      cursor: pointer;
-    }
-
-    .product-card::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(139,0,0,0.65) 0%, transparent 55%);
-      opacity: 0;
-      transition: opacity 0.4s;
-    }
-
-    .product-card:hover::after { opacity: 1; }
-
-    .product-card img {
-      width: 100%;
-      aspect-ratio: 2/3;
-      object-fit: contain;
-      padding: 28px 20px;
-      background: #0d0d0d;
-      display: block;
-      transition: transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-
-    .product-card:hover img { transform: scale(1.05); }
-
-    .product-meta {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      padding: 24px;
-      z-index: 2;
-      transform: translateY(56px);
-      transition: transform 0.4s;
-    }
-
-    .product-card:hover .product-meta { transform: translateY(0); }
-
-    .product-edition {
-      font-size: 10px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.55);
-    }
-
-    .product-name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 26px;
-      letter-spacing: 3px;
-      margin-top: 4px;
-    }
-
-    .product-cta {
-      display: inline-block;
-      margin-top: 14px;
-      padding: 9px 22px;
-      background: var(--red);
-      color: var(--white);
-      font-size: 10px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    /* ─── LOOKBOOK ─── */
-    #lookbook { background: var(--black); }
-
-    .lookbook-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      margin-top: 64px;
-    }
-
-    .lookbook-card { position: relative; overflow: hidden; }
-
-    .lookbook-card img {
-      width: 100%;
-      aspect-ratio: 2/3;
-      object-fit: cover;
-      object-position: top center;
-      display: block;
-      filter: grayscale(15%) contrast(1.08);
-      transition: transform 0.65s ease;
-    }
-
-    .lookbook-card:hover img { transform: scale(1.04); }
-
-    .lookbook-badge {
-      position: absolute;
-      top: 20px; left: 20px;
-      background: var(--red);
-      padding: 6px 14px;
-      font-size: 10px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-    }
-
-    .lookbook-cap {
-      margin-top: 18px;
-    }
-
-    .lookbook-cap h3 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 28px;
-      letter-spacing: 3px;
-    }
-
-    .lookbook-cap p {
-      font-size: 12px;
-      color: var(--grey);
-      letter-spacing: 1.5px;
-      margin-top: 5px;
-    }
-
-    /* ─── STATS ─── */
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      padding: 0;
-    }
-
-    .stat-item {
-      background: var(--red-dark);
-      padding: 64px 40px;
-      text-align: center;
-      border-right: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .stat-item:last-child { border-right: none; }
-
-    .stat-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 80px;
-      line-height: 1;
-      color: var(--white);
-    }
-
-    .stat-label {
-      font-size: 11px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.5);
-      margin-top: 10px;
-    }
-
-    /* ─── FEATURE ─── */
-    .feature {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      min-height: 620px;
-      padding: 0;
-    }
-
-    .feature-img {
-      overflow: hidden;
-    }
-
-    .feature-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: sepia(0.25) hue-rotate(315deg) saturate(1.6) brightness(0.85);
-      transition: transform 0.8s ease;
-    }
-
-    .feature:hover .feature-img img { transform: scale(1.04); }
-
-    .feature-body {
-      background: var(--offblack);
-      padding: 80px 68px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .feature-body .h2 { margin-bottom: 24px; }
-
-    .feature-body p {
-      font-size: 15px;
-      line-height: 1.85;
-      color: var(--grey);
-      max-width: 420px;
-      margin-bottom: 40px;
-    }
-
-    .btn-red {
-      display: inline-block;
-      padding: 14px 40px;
-      background: var(--red);
-      color: var(--white);
-      text-decoration: none;
-      font-size: 11px;
-      letter-spacing: 3.5px;
-      text-transform: uppercase;
-      width: fit-content;
-      transition: background 0.3s;
-    }
-
-    .btn-red:hover { background: var(--red-dark); }
-
-    /* ─── ABOUT ─── */
-    #about {
-      background: var(--black);
-      text-align: center;
-      padding: 160px 48px;
-    }
-
-    #about .h2 {
-      font-size: clamp(52px, 9vw, 110px);
-      max-width: 880px;
-      margin: 16px auto 0;
-      line-height: 0.92;
-    }
-
-    #about .h2 .accent { color: var(--red); }
-
-    #about p {
-      font-size: 16px;
-      line-height: 1.9;
-      color: var(--grey);
-      max-width: 580px;
-      margin: 40px auto 0;
-    }
-
-    /* ─── FOOTER ─── */
-    footer {
-      background: var(--offblack);
-      padding: 80px 48px 36px;
-      border-top: 1px solid #1c1c1c;
-    }
-
-    .footer-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 56px;
-    }
-
-    .footer-logo img { height: 44px; }
-
-    .footer-links {
-      display: flex;
-      gap: 36px;
-      list-style: none;
-    }
-
-    .footer-links a {
-      color: var(--grey);
-      text-decoration: none;
-      font-size: 12px;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      transition: color 0.3s;
-    }
-
-    .footer-links a:hover { color: var(--white); }
-
-    .footer-social { display: flex; gap: 18px; }
-
-    .footer-social a {
-      color: var(--grey);
-      text-decoration: none;
-      font-size: 11px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      transition: color 0.3s;
-    }
-
-    .footer-social a:hover { color: var(--red); }
-
-    .footer-bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 36px;
-      border-top: 1px solid #1c1c1c;
-    }
-
-    .footer-copy {
-      font-size: 11px;
-      color: #444;
-      letter-spacing: 1px;
-    }
-
-    .footer-tagline {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 15px;
-      letter-spacing: 5px;
-      color: var(--red);
-    }
-
-    /* ─── REVEAL ANIMATION ─── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(36px);
-      transition: opacity 0.85s ease, transform 0.85s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 900px) {
-      nav { padding: 18px 24px; }
-      .nav-links { display: none; }
-      section { padding: 80px 24px; }
-      .collection-head { flex-direction: column; align-items: flex-start; gap: 16px; }
-      .collection-desc { text-align: left; max-width: 100%; }
-      .product-grid { grid-template-columns: 1fr; }
-      .lookbook-grid { grid-template-columns: 1fr; gap: 32px; }
-      .stats { grid-template-columns: 1fr; }
-      .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); }
-      .feature { grid-template-columns: 1fr; }
-      .feature-img { height: 360px; }
-      .feature-body { padding: 56px 28px; }
-      #about { padding: 100px 24px; }
-      .footer-row { flex-direction: column; gap: 28px; text-align: center; }
-    }
-  </style>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>GRIVION — Where Pain Speaks</title>
+
+<link rel="preconnect" href="https://api.fontshare.com"/>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&f[]=neue-regrade@400,500,700,800&f[]=jetbrains-mono@400,500&display=swap" rel="stylesheet"/>
+
+<style>
+/* ============================================================
+   GRIVION — single-page site
+   Aesthetic: editorial brutalism × cinematic dark atmosphere
+   ============================================================ */
+
+:root{
+  --bg:        #0A0A0A;
+  --bg-2:      #050505;
+  --ink:       #F3F3F7;      /* Whisper */
+  --ink-dim:   #8a8a8e;
+  --ink-mute:  #45454a;
+  --blood:     #B5231B;      /* Blood Red  */
+  --plum:      #370455;      /* Plum Purple */
+  --pine:      #264136;      /* Pine Green */
+  --rule:      #1b1b1c;
+
+  --f-display: "Neue Regrade","Satoshi",Helvetica,Arial,sans-serif;
+  --f-body:    "Satoshi",Helvetica,Arial,sans-serif;
+  --f-mono:    "JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);font-family:var(--f-body);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+html{scroll-behavior:smooth}
+body{overflow-x:hidden;cursor:none}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:none}
+::selection{background:var(--blood);color:var(--ink)}
+
+/* ---------- GRAIN (animated) ---------- */
+.grain{
+  position:fixed;inset:-50%;
+  pointer-events:none;z-index:80;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  opacity:.07;mix-blend-mode:overlay;
+  animation:grain 1.2s steps(6) infinite;
+}
+@keyframes grain{
+  0%{transform:translate(0,0)}
+  20%{transform:translate(-3%,2%)}
+  40%{transform:translate(2%,-3%)}
+  60%{transform:translate(-2%,-1%)}
+  80%{transform:translate(3%,2%)}
+  100%{transform:translate(0,0)}
+}
+
+/* ---------- CUSTOM CURSOR ---------- */
+.cursor{
+  position:fixed;left:0;top:0;width:22px;height:22px;pointer-events:none;z-index:200;
+  transform:translate(-50%,-50%);mix-blend-mode:difference;
+  transition:width .18s ease, height .18s ease, opacity .2s ease;
+}
+.cursor::before,.cursor::after{
+  content:"";position:absolute;background:var(--blood);
+}
+.cursor::before{left:50%;top:0;bottom:0;width:1px;transform:translateX(-50%)}
+.cursor::after{top:50%;left:0;right:0;height:1px;transform:translateY(-50%)}
+.cursor .dot{
+  position:absolute;inset:0;border:1px solid var(--blood);
+  border-radius:0;
+}
+.cursor.lg{width:56px;height:56px}
+@media (hover:none){ body{cursor:auto} .cursor{display:none} }
+
+/* ---------- NAV ---------- */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:22px 28px;
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink);
+  mix-blend-mode:difference;
+}
+.nav .left{display:flex;gap:22px;align-items:center}
+.nav .wordmark{
+  font-family:var(--f-display);font-weight:800;letter-spacing:.32em;font-size:14px;
+  justify-self:center;
+}
+.nav .right{display:flex;gap:18px;justify-content:flex-end;align-items:center}
+.nav .right .dot-live{width:6px;height:6px;background:var(--blood);display:inline-block;margin-right:8px;animation:blink 1.6s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+
+.menu-btn{display:flex;align-items:center;gap:10px}
+.menu-btn .bars{display:inline-flex;flex-direction:column;gap:4px}
+.menu-btn .bars i{width:20px;height:1px;background:var(--ink);display:block}
+
+/* ---------- LOGO MARK (uses real PNG) ---------- */
+.mark-img{
+  width:100%;height:100%;display:block;
+}
+.mark-wrap{display:inline-block;line-height:0;}
+.mark-wrap.sz-sm{width:32px;height:34px}
+.mark-wrap.sz-md{width:58px;height:62px}
+.mark-wrap.sz-lg{width:120px;height:128px}
+.mark-wrap.sz-xl{width:200px;height:214px}
+.mark-wrap img{width:100%;height:100%;object-fit:contain}
+.mark-wrap.c-red img  { content:url("assets/logo-red-clean.png") }
+.mark-wrap.c-white img{ content:url("assets/logo-white.png") }
+.mark-wrap.c-black img{ content:url("assets/logo-black.png") }
+
+/* ---------- LAYOUT HELPERS ---------- */
+.section{position:relative;padding:120px 28px;border-top:1px solid var(--rule)}
+.section:first-of-type{border-top:0}
+.container{max-width:1480px;margin:0 auto}
+.mono{font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-dim)}
+.rule{height:1px;background:var(--rule)}
+.num{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  position:relative;height:100vh;min-height:720px;
+  overflow:hidden;border-top:0;padding:0;
+}
+.hero-bg{
+  position:absolute;inset:0;z-index:0;
+  background:
+    radial-gradient(60% 80% at 70% 30%, rgba(181,35,27,.14), transparent 65%),
+    linear-gradient(180deg, #0b0b0b 0%, #060606 70%, #000 100%);
+}
+.hero-figure{
+  position:absolute;inset:0;z-index:1;
+  background:
+    radial-gradient(60% 80% at 70% 45%, rgba(181,35,27,.12), transparent 60%),
+    radial-gradient(50% 80% at 30% 60%, rgba(55,4,85,.14), transparent 65%),
+    linear-gradient(180deg, #0a0a0a 0%, #050505 70%, #000 100%);
+}
+.hero-figure::before{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(100deg, transparent 0%, transparent 58%, rgba(243,243,247,.04) 64%, transparent 78%, transparent 100%);
+  mix-blend-mode:screen;
+}
+.hero-figure::after{
+  content:"";position:absolute;inset:0;
+  background:
+    repeating-linear-gradient(115deg, rgba(20,24,40,.2) 0 2px, rgba(0,0,0,0) 2px 6px);
+  opacity:.35;
+}
+.hero-vignette{
+  position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.55) 0%, transparent 20%, transparent 60%, rgba(0,0,0,.85) 100%),
+    radial-gradient(120% 80% at 50% 100%, rgba(0,0,0,.55), transparent 60%);
+}
+
+.hero .logo{
+  position:absolute;top:26px;left:28px;z-index:20;
+  display:flex;align-items:center;gap:12px;
+  mix-blend-mode:difference;
+}
+.logo-mark{width:38px;height:38px}
+.logo-mark rect,.logo-mark path,.logo-mark polygon{fill:var(--ink)}
+.logo-label{
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink);
+  padding-left:12px;border-left:1px solid rgba(243,243,247,.35);
+}
+
+.hero-copy{
+  position:absolute;left:0;right:0;bottom:0;z-index:10;
+  padding:0 28px 72px;
+}
+.hero-tagline{
+  font-family:var(--f-display);
+  font-weight:800;
+  font-size:clamp(72px, 18vw, 280px);
+  line-height:.82;
+  letter-spacing:-.04em;
+  text-transform:uppercase;
+  display:flex;flex-wrap:wrap;gap:0 .28em;
+  color:var(--ink);
+}
+.hero-tagline .w{
+  display:inline-block;overflow:hidden;
+  padding-bottom:.04em;
+}
+.hero-tagline .w span{
+  display:inline-block;transform:translateY(120%) scale(1.08);
+  filter:blur(14px);opacity:0;
+  animation:crash .9s cubic-bezier(.2,.8,.2,1) forwards;
+}
+.hero-tagline .w:nth-child(1) span{animation-delay:.25s}
+.hero-tagline .w:nth-child(2) span{animation-delay:.55s}
+.hero-tagline .w:nth-child(3) span{animation-delay:.85s}
+@keyframes crash{
+  60%{filter:blur(2px);opacity:1}
+  100%{transform:translateY(0) scale(1);filter:blur(0);opacity:1}
+}
+
+.hero-meta{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  padding-top:28px;color:var(--ink-dim);
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  opacity:0;animation:fadeIn 1s ease 1.5s forwards;
+}
+.hero-meta .left{display:flex;gap:26px;flex-wrap:wrap}
+.hero-meta .tag{color:var(--ink)}
+.hero-meta .right{display:flex;align-items:center;gap:12px}
+.hero-meta .blood{color:var(--blood)}
+
+.scroll-ind{
+  position:absolute;right:28px;top:50%;transform:translateY(-50%) rotate(90deg);transform-origin:right center;z-index:10;
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-dim);
+  opacity:0;animation:fadeIn 1s ease 1.8s forwards;
+}
+@keyframes fadeIn{to{opacity:1}}
+
+/* ============================================================
+   STATEMENT
+   ============================================================ */
+.statement{
+  background:#060606;
+  padding:180px 28px 120px;
+  overflow:hidden;
+}
+.statement .head{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  margin-bottom:48px;gap:24px;flex-wrap:wrap;
+}
+.statement .head .idx{color:var(--ink-dim)}
+.statement .head .tag{color:var(--ink-dim);max-width:340px;text-align:right;line-height:1.6;font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.big-claim{
+  font-family:var(--f-display);font-weight:800;
+  font-size:clamp(52px, 9.5vw, 168px);
+  line-height:.9;letter-spacing:-.035em;text-transform:uppercase;
+}
+.big-claim .dimmed{color:var(--ink-mute)}
+.big-claim .slash{color:var(--blood);font-weight:400;font-style:italic;font-family:"Satoshi";padding:0 .1em}
+
+/* Ticker */
+.ticker{
+  margin-top:120px;
+  border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  padding:28px 0;overflow:hidden;white-space:nowrap;position:relative;
+}
+.ticker-track{
+  display:inline-flex;gap:48px;
+  animation:ticker 38s linear infinite;
+  font-family:var(--f-display);font-weight:800;font-size:clamp(32px,4.2vw,64px);
+  letter-spacing:-.01em;text-transform:uppercase;
+  padding-right:48px;
+}
+.ticker-track .dot{color:var(--blood);font-family:"Satoshi";font-weight:900;font-size:.85em;align-self:center}
+.ticker-track .ghost{color:var(--ink-mute);-webkit-text-stroke:1px var(--ink-mute);color:transparent}
+@keyframes ticker{to{transform:translateX(-50%)}}
+
+/* ============================================================
+   DROP 001
+   ============================================================ */
+.drop{
+  padding:160px 28px 120px;background:var(--bg);
+}
+.drop .head{
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:24px;margin-bottom:80px;
+}
+.drop .head .lbl{color:var(--ink-dim)}
+.drop .head .status{text-align:right;color:var(--ink);font-family:var(--f-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase}
+.drop .head .status .live{display:inline-block;width:6px;height:6px;background:var(--blood);margin-right:8px;vertical-align:middle;animation:blink 1.6s ease-in-out infinite}
+
+.drop-title{
+  font-family:var(--f-display);font-weight:800;text-align:center;
+  font-size:clamp(44px, 7.5vw, 128px);line-height:.88;letter-spacing:-.03em;text-transform:uppercase;
+  grid-column:1/-1;margin-top:12px;
+}
+.drop-title .em{color:var(--blood)}
+.drop-title .line2{display:block;color:var(--ink)}
+.drop-title .line2 .hover-swap{position:relative;display:inline-block}
+.drop-title .line2 .hover-swap .alt{
+  position:absolute;inset:0;color:var(--blood);font-style:italic;opacity:0;transform:translateY(.1em);
+  transition:opacity .35s ease, transform .35s ease;
+  white-space:nowrap;
+}
+.drop.hovered .hover-swap .orig{opacity:0;transform:translateY(-.1em);transition:opacity .35s, transform .35s}
+.drop.hovered .hover-swap .alt{opacity:1;transform:translateY(0)}
+.drop-title .line2 .hover-swap .orig{transition:opacity .35s, transform .35s; display:inline-block}
+
+/* product grid */
+.drop-grid{
+  display:grid;grid-template-columns:minmax(260px,320px) 1fr minmax(260px,320px);
+  gap:24px;margin-top:40px;align-items:stretch;
+}
+.detail-list{
+  border-left:1px solid var(--rule);padding-left:20px;
+  display:flex;flex-direction:column;gap:28px;
+  padding-top:40px;
+}
+.detail-list.r{border-left:0;border-right:1px solid var(--rule);padding-left:0;padding-right:20px;text-align:right}
+.detail-list .k{color:var(--ink-dim);font-family:var(--f-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:8px}
+.detail-list .v{font-family:var(--f-display);font-weight:700;font-size:22px;letter-spacing:-.01em;line-height:1.1}
+
+/* ---------- product stage: 3D jeans ---------- */
+.product-stage{
+  position:relative;aspect-ratio:4/5;background:#09090a;overflow:hidden;
+  border:1px solid var(--rule);
+  perspective:1400px;
+}
+.jeans-3d{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  transform-style:preserve-3d;
+  transition:transform .6s cubic-bezier(.2,.8,.2,1);
+  will-change:transform;
+}
+.jeans-3d .layer{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  transform-style:preserve-3d;
+  opacity:0;
+  transition:opacity .5s ease;
+}
+.jeans-3d .layer.active{opacity:1}
+.jeans-3d .layer img{
+  height:86%;width:auto;max-width:78%;object-fit:contain;
+  filter: drop-shadow(0 40px 40px rgba(0,0,0,.65)) drop-shadow(0 10px 18px rgba(181,35,27,.08));
+  transform: translateZ(40px);
+}
+.platform{
+  position:absolute;left:50%;bottom:8%;
+  width:72%;height:32px;transform:translateX(-50%) rotateX(78deg);
+  border-radius:50%;
+  background:
+    radial-gradient(50% 60% at 50% 50%, rgba(181,35,27,.18), transparent 70%),
+    radial-gradient(50% 60% at 50% 50%, rgba(255,255,255,.05), transparent 70%);
+  filter:blur(2px);
+}
+.platform::before{
+  content:"";position:absolute;inset:0;border:1px solid rgba(181,35,27,.25);border-radius:50%;
+}
+
+.stage-grid{
+  position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(to right, rgba(243,243,247,.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(243,243,247,.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(60% 60% at 50% 50%, #000 30%, transparent 80%);
+}
+
+.product-stage .overlay{
+  position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg, transparent 60%, rgba(0,0,0,.7));
+}
+.product-stage .tag{
+  position:absolute;left:20px;bottom:20px;z-index:2;
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);
+}
+.product-stage .tag .price{color:var(--blood)}
+.product-stage .frame-crop{
+  position:absolute;left:20px;top:20px;
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-dim);
+}
+.product-stage .corner{position:absolute;width:14px;height:14px;border:1px solid var(--ink-dim)}
+.product-stage .c-tl{top:14px;left:14px;border-right:0;border-bottom:0}
+.product-stage .c-tr{top:14px;right:14px;border-left:0;border-bottom:0}
+.product-stage .c-bl{bottom:14px;left:14px;border-right:0;border-top:0}
+.product-stage .c-br{bottom:14px;right:14px;border-left:0;border-top:0}
+
+.thumbs{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:24px;
+  grid-column:2/3;
+}
+.thumb{
+  aspect-ratio:1/1.15;background:#0c0d12;border:1px solid var(--rule);position:relative;overflow:hidden;
+  padding:0;
+  transition:border-color .2s ease, transform .2s ease;
+}
+.thumb img{
+  position:absolute;inset:8px 8px 22px;width:calc(100% - 16px);height:calc(100% - 30px);
+  object-fit:contain;opacity:.72;transition:opacity .25s ease, transform .4s ease;
+}
+.thumb:hover img{opacity:1;transform:translateY(-2px)}
+.thumb::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(90% 90% at 50% 40%, rgba(181,35,27,.08) 0%, transparent 60%),
+    linear-gradient(180deg, #0c0d12 0%, #07070a 100%);
+}
+.thumb .n{
+  position:absolute;bottom:8px;left:10px;font-family:var(--f-mono);font-size:9px;letter-spacing:.2em;color:var(--ink-dim);
+}
+.thumb.active{outline:1px solid var(--blood);outline-offset:-1px}
+.thumb.active .n{color:var(--blood)}
+
+/* buy CTA under product grid */
+.buy-cta{
+  margin-top:80px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;
+}
+.buy-btn{
+  display:flex;align-items:center;gap:24px;padding:28px 32px;
+  background:var(--blood);color:var(--ink);
+  font-family:var(--f-display);font-weight:800;letter-spacing:.02em;text-transform:uppercase;
+  font-size:clamp(20px,2.2vw,32px);
+  transition:background .25s ease, transform .4s cubic-bezier(.2,.8,.2,1);
+  border:1px solid var(--blood);
+  justify-content:space-between;
+}
+.buy-btn:hover{background:#0A0A0A;color:var(--blood);transform:translateX(8px)}
+.buy-btn .pr{font-family:var(--f-mono);font-size:.6em;letter-spacing:.08em;opacity:.85}
+.buy-btn .arr{font-size:1.4em;line-height:0}
+.buy-aside{color:var(--ink-dim);text-align:right}
+@media (max-width:700px){
+  .buy-cta{grid-template-columns:1fr}
+  .buy-aside{text-align:left}
+}
+
+/* ============================================================
+   MANIFESTO
+   ============================================================ */
+.manifesto{
+  background:#040405;padding:200px 28px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.manifesto::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(50% 60% at 50% 40%, rgba(55,4,85,.28), transparent 70%);
+}
+.manifesto .head{margin-bottom:80px;display:flex;justify-content:center;gap:24px;flex-wrap:wrap;position:relative;z-index:2}
+.manifesto-lines{position:relative;z-index:2;max-width:1200px;margin:0 auto}
+.m-line{
+  font-family:var(--f-display);font-weight:700;
+  font-size:clamp(36px, 5.6vw, 96px);line-height:1.02;letter-spacing:-.025em;
+  opacity:0;transform:translateY(40px);
+  transition:opacity .9s cubic-bezier(.2,.8,.2,1), transform .9s cubic-bezier(.2,.8,.2,1);
+}
+.m-line.show{opacity:1;transform:translateY(0)}
+.m-line .blood{color:var(--blood)}
+.m-line .dim{color:var(--ink-mute)}
+.m-line em{font-style:italic;font-weight:500;font-family:"Satoshi"}
+.m-line + .m-line{margin-top:32px}
+
+.m-attrib{
+  margin-top:96px;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2;
+  border-top:1px solid var(--rule);padding-top:24px;max-width:1200px;margin-left:auto;margin-right:auto;
+}
+.m-attrib .l,.m-attrib .r{font-family:var(--f-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-dim)}
+.m-attrib .sig{font-family:var(--f-display);font-weight:800;letter-spacing:.1em;color:var(--ink)}
+
+.nessuno-pull{
+  margin:110px auto 0;max-width:1200px;text-align:center;position:relative;z-index:2;
+  border-top:1px solid var(--rule);padding-top:48px;
+}
+.nessuno-q{
+  font-family:var(--f-display);font-weight:500;font-style:italic;
+  font-size:clamp(28px,4.2vw,64px);line-height:1.15;letter-spacing:-.015em;
+  color:var(--ink);
+}
+.nessuno-q .accent{color:var(--blood)}
+
+/* ============================================================
+   FOUNDERS STRIP
+   ============================================================ */
+.founders{padding:80px 28px;background:var(--bg);border-top:1px solid var(--rule)}
+.founders-row{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;max-width:1200px;margin:0 auto;
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-dim);
+}
+.founders-row .name{color:var(--ink);font-family:var(--f-display);font-weight:700;font-size:22px;letter-spacing:-.005em;text-transform:none;margin-bottom:6px}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer{
+  background:#000;padding:120px 28px 40px;text-align:center;border-top:1px solid var(--rule);
+  position:relative;
+}
+.footer .mark{
+  margin:0 auto 28px;width:72px;height:72px;
+}
+.footer .mark path,.footer .mark polygon{fill:var(--ink)}
+.footer-mark{display:block;margin:0 auto 28px}
+.footer .wordmark{
+  font-family:var(--f-display);font-weight:800;font-size:clamp(56px,8vw,120px);letter-spacing:.08em;line-height:1;
+}
+.footer .caps{
+  margin-top:18px;font-family:var(--f-mono);font-size:12px;letter-spacing:.42em;text-transform:uppercase;color:var(--ink-dim);
+}
+.footer .nessuno{
+  margin:42px auto 0;max-width:720px;
+  font-family:var(--f-display);font-weight:500;font-style:italic;
+  font-size:clamp(18px,2vw,26px);line-height:1.35;color:var(--ink);
+  letter-spacing:-.005em;
+}
+.footer .nessuno span{color:var(--blood);font-style:normal;padding:0 4px}
+.footer .links{
+  margin-top:64px;display:flex;gap:28px;justify-content:center;flex-wrap:wrap;
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+}
+.footer .links a:hover{color:var(--blood)}
+.footer .bottom{
+  margin-top:80px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-mute);
+}
+
+/* ---------- scroll reveal default ---------- */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .9s ease, transform .9s ease}
+.reveal.show{opacity:1;transform:translateY(0)}
+
+/* ---------- responsive ---------- */
+@media (max-width:900px){
+  .drop-grid{grid-template-columns:1fr}
+  .detail-list, .detail-list.r{border:0;padding:0;text-align:left}
+  .thumbs{grid-column:auto;grid-template-columns:repeat(4,1fr)}
+  .drop .head{grid-template-columns:1fr;text-align:left}
+  .drop .head .status{text-align:left}
+  .hero-meta{flex-direction:column;align-items:flex-start;gap:10px}
+  .scroll-ind{display:none}
+  .founders-row{grid-template-columns:1fr}
+  .nav{grid-template-columns:1fr 1fr}
+  .nav .wordmark{justify-self:end}
+  .nav .left{display:none}
+}
+</style>
 </head>
 <body>
 
+<!-- Cursor + grain overlays -->
+<div class="cursor" id="cursor"><span class="dot"></span></div>
+<div class="grain" aria-hidden="true"></div>
+
 <!-- NAV -->
-<nav>
-  <a href="#" class="nav-logo">
-    <img src="logo.png" alt="Grivion">
-    <span class="nav-brand">GRIVION</span>
-  </a>
-  <ul class="nav-links">
-    <li><a href="#collection">Collection</a></li>
-    <li><a href="#lookbook">Lookbook</a></li>
-    <li><a href="#about">About</a></li>
-  </ul>
+<nav class="nav">
+  <div class="left"><span>N° 001</span><span>AW/26</span></div>
+  <div class="wordmark">GRIVION</div>
+  <div class="right">
+    <span><span class="dot-live"></span>DROP LIVE</span>
+    <a href="buy.html" style="color:var(--blood)">BUY €110</a>
+    <button class="menu-btn" aria-label="Menu"><span class="bars"><i></i><i></i></span><span>MENU</span></button>
+  </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-glow"></div>
-  <img
-    class="hero-hands-bg"
-    src="hands-hero.png"
-    alt=""
-    aria-hidden="true"
-  >
-  <div class="hero-content reveal">
-    <img class="hero-logo" src="logo.png" alt="Grivion Logo">
-    <h1 class="hero-title">GRI<span class="accent">VI</span>ON</h1>
-    <p class="hero-subtitle">Denim — SS 2025 Collection</p>
-    <a href="#collection" class="hero-cta">Explore the Drop</a>
+<!-- ============================================================ HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-figure"></div>
+  <div class="hero-vignette"></div>
+
+  <a class="logo" href="#">
+    <span class="mark-wrap sz-sm c-white"><img src="assets/logo-white.png" alt="Grivion"/></span>
+    <span class="logo-label">GRIT · UNION</span>
+  </a>
+
+  <div class="hero-copy">
+    <h1 class="hero-tagline" aria-label="Where pain speaks">
+      <span class="w"><span>WHERE</span></span>
+      <span class="w"><span>PAIN</span></span>
+      <span class="w"><span>SPEAKS.</span></span>
+    </h1>
+    <div class="hero-meta">
+      <div class="left">
+        <span class="tag">DROP 001 / "AM I LATE?"</span>
+        <span>BUILT IN ITALY</span>
+        <span>EST. 2026</span>
+      </div>
+      <div class="right">
+        <span class="blood">● REC</span><span>00:00:00</span>
+      </div>
+    </div>
   </div>
-  <div class="hero-scroll">Scroll</div>
+
+  <div class="scroll-ind">SCROLL ↓ INDEX / 01 — 05</div>
 </section>
 
-<!-- TICKER -->
-<div class="ticker" aria-hidden="true">
-  <div class="ticker-track">
-    <span>GRIVION DENIM</span><span>★</span>
-    <span>SS 2025</span><span>★</span>
-    <span>LIMITED EDITION</span><span>★</span>
-    <span>HANDCRAFTED GRAPHICS</span><span>★</span>
-    <span>WIDE LEG SILHOUETTE</span><span>★</span>
-    <span>GRIVION DENIM</span><span>★</span>
-    <span>SS 2025</span><span>★</span>
-    <span>LIMITED EDITION</span><span>★</span>
-    <span>HANDCRAFTED GRAPHICS</span><span>★</span>
-    <span>WIDE LEG SILHOUETTE</span><span>★</span>
-  </div>
-</div>
-
-<!-- COLLECTION -->
-<section id="collection">
-  <div class="collection-head reveal">
-    <div>
-      <p class="label">SS 2025</p>
-      <h2 class="h2">The Drop</h2>
+<!-- ============================================================ STATEMENT -->
+<section class="section statement" id="statement">
+  <div class="container">
+    <div class="head">
+      <div class="mono">02 / STATEMENT</div>
+      <div class="mono tag">Motivazionale ma reale. Diretto ma umano. The voice doesn't perform — it remembers.</div>
     </div>
-    <p class="collection-desc">
-      Wide-leg silhouette. Hand-graphic denim.<br>Built to make noise.
-    </p>
+
+    <h2 class="big-claim reveal">
+      BUILT <span class="slash">/</span> FOR <span class="dimmed">THOSE</span><br/>
+      WHO DIDN'T <span class="dimmed">QUIT</span>.
+    </h2>
   </div>
 
-  <div class="product-grid reveal">
-    <div class="product-card">
-      <img src="jeans-bold.jpg" alt="Mani Rosso — Bold Edition">
-      <div class="product-meta">
-        <p class="product-edition">Limited Drop</p>
-        <h3 class="product-name">MANI ROSSO</h3>
-        <a href="#" class="product-cta">Notify Me</a>
-      </div>
-    </div>
+  <!-- infinite ticker -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track" id="ticker-a">
+      <span>GRIT</span><span class="dot">●</span>
+      <span class="ghost">UNION</span><span class="dot">●</span>
+      <span>WHERE PAIN SPEAKS</span><span class="dot">●</span>
+      <span class="ghost">GRIVION</span><span class="dot">●</span>
+      <span>N° 001</span><span class="dot">●</span>
+      <span class="ghost">AM I LATE?</span><span class="dot">●</span>
+      <span>BUILT IN ITALY</span><span class="dot">●</span>
+      <span class="ghost">NESSUNO CADE IN SILENZIO</span><span class="dot">●</span>
 
-    <div class="product-card">
-      <img src="jeans.png" alt="Grivion Full Line Preview">
-      <div class="product-meta">
-        <p class="product-edition">Design Preview</p>
-        <h3 class="product-name">THE FULL LINE</h3>
-        <a href="#" class="product-cta">Notify Me</a>
-      </div>
-    </div>
-
-    <div class="product-card">
-      <img src="jeans-dark.jpg" alt="Mani Scuro — Shadow Edition">
-      <div class="product-meta">
-        <p class="product-edition">Shadow Edition</p>
-        <h3 class="product-name">MANI SCURO</h3>
-        <a href="#" class="product-cta">Notify Me</a>
-      </div>
+      <!-- duplicated for seamless loop -->
+      <span>GRIT</span><span class="dot">●</span>
+      <span class="ghost">UNION</span><span class="dot">●</span>
+      <span>WHERE PAIN SPEAKS</span><span class="dot">●</span>
+      <span class="ghost">GRIVION</span><span class="dot">●</span>
+      <span>N° 001</span><span class="dot">●</span>
+      <span class="ghost">AM I LATE?</span><span class="dot">●</span>
+      <span>BUILT IN ITALY</span><span class="dot">●</span>
+      <span class="ghost">NESSUNO CADE IN SILENZIO</span><span class="dot">●</span>
     </div>
   </div>
 </section>
 
-<!-- LOOKBOOK -->
-<section id="lookbook">
-  <div class="reveal">
-    <p class="label">Lookbook</p>
-    <h2 class="h2">Worn on the Street</h2>
-  </div>
+<!-- ============================================================ DROP 001 -->
+<section class="section drop" id="drop">
+  <div class="container">
+    <div class="head">
+      <div class="mono lbl">03 / PRODUCT</div>
+      <h3 class="drop-title">
+        <span>DROP <span class="em">001</span></span>
+        <span class="line2">
+          —
+          <span class="hover-swap">
+            <span class="orig">AM I LATE?</span>
+            <span class="alt">BUILT IN ITALY</span>
+          </span>
+        </span>
+      </h3>
+      <div class="status"><span class="live"></span>AVAILABLE NOW / 120 PCS</div>
+    </div>
 
-  <div class="lookbook-grid reveal">
-    <div class="lookbook-card">
-      <img src="Photo 1.png" alt="Model wearing Grivion — Look 01">
-      <span class="lookbook-badge">Look 01</span>
-      <div class="lookbook-cap">
-        <h3>LOOK 01 — MANI ROSSO</h3>
-        <p>Wide Leg Denim · Bold Hand Graphic</p>
+    <div class="drop-grid">
+      <!-- left details -->
+      <div class="detail-list r reveal">
+        <div><div class="k">01 / Fit</div><div class="v">Baggy · Low-slung</div></div>
+        <div><div class="k">02 / Fabric</div><div class="v">Premium Italian Denim</div></div>
+        <div><div class="k">03 / Edge</div><div class="v">Raw Selvedge</div></div>
+        <div><div class="k">04 / Mark</div><div class="v">Embroidered Logo</div></div>
+      </div>
+
+      <!-- centre stage -->
+      <div class="product-stage reveal" id="stage"
+           onmouseenter="document.getElementById('drop-sec').classList.add('hovered')"
+           onmouseleave="document.getElementById('drop-sec').classList.remove('hovered')">
+        <span class="corner c-tl"></span>
+        <span class="corner c-tr"></span>
+        <span class="corner c-bl"></span>
+        <span class="corner c-br"></span>
+        <div class="stage-grid"></div>
+        <div class="frame-crop">SKU — G01 / BFD / 26 · FRONT</div>
+
+        <div class="jeans-3d" id="jeans3d">
+          <div class="layer active" data-v="0"><img src="assets/look-front.png"  alt="AM I LATE? — front"/></div>
+          <div class="layer"        data-v="1"><img src="assets/look-side.png"   alt="AM I LATE? — 3/4"/></div>
+          <div class="layer"        data-v="2"><img src="assets/look-back.png"   alt="AM I LATE? — back"/></div>
+          <div class="layer"        data-v="3"><img src="assets/look-detail.png" alt="AM I LATE? — detail"/></div>
+        </div>
+        <div class="platform"></div>
+
+        <div class="overlay"></div>
+        <div class="tag">
+          "AM I LATE?" · BLACK / BLOOD · <span class="price">€110</span>
+        </div>
+      </div>
+
+      <!-- right details -->
+      <div class="detail-list reveal">
+        <div><div class="k">05 / Weight</div><div class="v">14.5 oz</div></div>
+        <div><div class="k">06 / Origin</div><div class="v">Prato, IT</div></div>
+        <div><div class="k">07 / Pieces</div><div class="v">120 / worldwide</div></div>
+        <div><div class="k">08 / Wash</div><div class="v">One-wash raw</div></div>
       </div>
     </div>
 
-    <div class="lookbook-card">
-      <img src="Photo 2.png" alt="Model wearing Grivion — Look 02">
-      <span class="lookbook-badge">Look 02</span>
-      <div class="lookbook-cap">
-        <h3>LOOK 02 — MANI SCURO</h3>
-        <p>Shadow Edition · Subtle Depth</p>
+    <div class="drop-grid" style="margin-top:12px">
+      <div></div>
+      <div class="thumbs">
+        <button class="thumb active" data-v="0"><img src="assets/look-front.png"  alt=""/><span class="n">01 / FRONT</span></button>
+        <button class="thumb"        data-v="1"><img src="assets/look-side.png"   alt=""/><span class="n">02 / 3/4</span></button>
+        <button class="thumb"        data-v="2"><img src="assets/look-back.png"   alt=""/><span class="n">03 / BACK</span></button>
+        <button class="thumb"        data-v="3"><img src="assets/look-detail.png" alt=""/><span class="n">04 / DETAIL</span></button>
       </div>
+      <div></div>
     </div>
+
+    <div class="buy-cta">
+      <a href="buy.html" class="buy-btn">
+        <span class="lbl">ACQUIRE — "AM I LATE?"</span>
+        <span class="pr">€110</span>
+        <span class="arr">→</span>
+      </a>
+      <div class="buy-aside mono">FREE EU SHIPPING · 120 PCS WORLDWIDE · MADE IN ITALY</div>
+    </div>
+  </div>
+  <span id="drop-sec" style="display:none"></span>
+</section>
+
+<!-- ============================================================ MANIFESTO -->
+<section class="section manifesto" id="manifesto">
+  <div class="head">
+    <div class="mono">04 / MANIFESTO</div>
+    <div class="mono" style="color:var(--ink-mute)">Read slow.</div>
+  </div>
+
+  <div class="manifesto-lines">
+    <div class="m-line">We are not a brand.</div>
+    <div class="m-line"><span class="blood">We are a consequence.</span></div>
+    <div class="m-line">A <em>quiet ferocity</em>, stitched into cotton.</div>
+    <div class="m-line"><span class="dim">A promise made</span> to the version of you</div>
+    <div class="m-line">that keeps walking <span class="blood">after the applause stops.</span></div>
+  </div>
+
+  <div class="nessuno-pull reveal">
+    <div class="mono" style="margin-bottom:18px">— Core belief</div>
+    <blockquote class="nessuno-q">
+      "Nessuno si merita<br/><span class="accent">di cadere in silenzio."</span>
+    </blockquote>
+  </div>
+
+  <div class="m-attrib">
+    <div class="l">— GRIVION / MANIFESTO 001</div>
+    <div class="sig">WHERE PAIN SPEAKS</div>
+    <div class="r">YOUSAF · FILIPPO · KLEJDIS</div>
   </div>
 </section>
 
-<!-- STATS -->
-<div class="stats reveal">
-  <div class="stat-item">
-    <p class="stat-num">02</p>
-    <p class="stat-label">Denim Designs</p>
+<!-- ============================================================ FOUNDERS -->
+<section class="founders">
+  <div class="founders-row">
+    <div><div class="name">Grit</div>Resistenza mentale — resistance that doesn't perform.</div>
+    <div><div class="name">Union</div>Nessuno cade in silenzio — no one falls in silence.</div>
+    <div><div class="name">Voice</div>Il dolore non viene nascosto — it speaks.</div>
   </div>
-  <div class="stat-item">
-    <p class="stat-num">01</p>
-    <p class="stat-label">Drop Season</p>
-  </div>
-  <div class="stat-item">
-    <p class="stat-num">∞</p>
-    <p class="stat-label">Statement Made</p>
-  </div>
-</div>
-
-<!-- FEATURE -->
-<div class="feature">
-  <div class="feature-img">
-    <img
-      src="hands-detail.png"
-      alt="Hands graphic — Grivion signature design"
-    >
-  </div>
-  <div class="feature-body reveal">
-    <p class="label">The Design</p>
-    <h2 class="h2">Hands From<br>The Crowd</h2>
-    <p>
-      Every pair carries the energy of the crowd. Reaching hands etched into the denim — a symbol of raw momentum, uprising, and collective power. This isn't just clothing. It's a statement woven into every thread.
-    </p>
-    <a href="#" class="btn-red">Get Notified</a>
-  </div>
-</div>
-
-<!-- ABOUT -->
-<section id="about">
-  <p class="label reveal">The Brand</p>
-  <h2 class="h2 reveal">Built Different.<br><span class="accent">Worn</span> with Purpose.</h2>
-  <p class="reveal">
-    GRIVION is an independent denim label born from the underground. We design for those who move with intention — statement pieces that carry weight both visually and culturally. No fast fashion. No compromise. Just craft.
-  </p>
 </section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-row">
-    <div class="footer-logo">
-      <img src="logo.png" alt="Grivion">
-    </div>
-    <ul class="footer-links">
-      <li><a href="#collection">Collection</a></li>
-      <li><a href="#lookbook">Lookbook</a></li>
-      <li><a href="#about">About</a></li>
-    </ul>
-    <div class="footer-social">
-      <a href="#">Instagram</a>
-      <a href="#">TikTok</a>
-    </div>
+<!-- ============================================================ FOOTER -->
+<footer class="footer">
+  <div class="mark-wrap sz-lg c-white footer-mark"><img src="assets/logo-white.png" alt="Grivion"/></div>
+  <div class="wordmark">GRIVION</div>
+  <div class="caps">WHERE · PAIN · SPEAKS</div>
+  <div class="nessuno">
+    <span>"</span>Nessuno si merita di cadere in silenzio.<span>"</span>
   </div>
-  <div class="footer-bottom">
-    <p class="footer-copy">© 2025 Grivion. All rights reserved.</p>
-    <p class="footer-tagline">MAKE NOISE</p>
+  <div class="links">
+    <a href="#">Instagram</a>
+    <a href="#">Contact</a>
+    <a href="#">Newsletter</a>
+  </div>
+  <div class="bottom">
+    <span>© 2026 GRIVION — ALL RIGHTS RESERVED</span>
+    <span>GRIT + UNION</span>
+    <span>MADE IN ITALY</span>
   </div>
 </footer>
 
 <script>
-  const revealEls = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.08 });
-  revealEls.forEach(el => io.observe(el));
+/* =======================================================
+   Cursor
+   ======================================================= */
+(()=>{
+  const c = document.getElementById('cursor');
+  let tx=0,ty=0,cx=0,cy=0;
+  window.addEventListener('mousemove', e=>{tx=e.clientX;ty=e.clientY;});
+  function frame(){
+    cx += (tx-cx)*0.28;
+    cy += (ty-cy)*0.28;
+    c.style.transform = `translate(${cx}px, ${cy}px) translate(-50%,-50%)`;
+    requestAnimationFrame(frame);
+  }
+  frame();
+  document.querySelectorAll('a, button, .product-stage, .thumb').forEach(el=>{
+    el.addEventListener('mouseenter', ()=>c.classList.add('lg'));
+    el.addEventListener('mouseleave', ()=>c.classList.remove('lg'));
+  });
+})();
 
-  // Immediately reveal hero
-  document.querySelector('.hero .reveal').classList.add('visible');
+/* =======================================================
+   Scroll reveals (IntersectionObserver)
+   ======================================================= */
+(()=>{
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(en=>{
+      if(en.isIntersecting){
+        en.target.classList.add('show');
+        io.unobserve(en.target);
+      }
+    });
+  },{threshold:.18});
+  document.querySelectorAll('.reveal, .m-line').forEach(el=>io.observe(el));
+
+  const lines = document.querySelectorAll('.m-line');
+  const io2 = new IntersectionObserver(entries=>{
+    entries.forEach(en=>{
+      if(en.isIntersecting){
+        lines.forEach((ln,i)=>{
+          setTimeout(()=>ln.classList.add('show'), i*280);
+        });
+        io2.disconnect();
+      }
+    });
+  },{threshold:.2});
+  if(lines[0]) io2.observe(lines[0].parentElement);
+})();
+
+/* =======================================================
+   Jeans 3D — mouse tilt + view switch
+   ======================================================= */
+(()=>{
+  const stage = document.getElementById('stage');
+  const rig   = document.getElementById('jeans3d');
+  if(!stage || !rig) return;
+
+  let rx=0, ry=0, trx=0, try_=0;
+  stage.addEventListener('mousemove', e=>{
+    const r = stage.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width;
+    const py = (e.clientY - r.top) / r.height;
+    try_ = (px - .5) * 26;
+    trx  = -(py - .5) * 14;
+  });
+  stage.addEventListener('mouseleave', ()=>{ trx=0; try_=0; });
+
+  let t=0;
+  function frame(){
+    rx += (trx - rx) * .08;
+    ry += (try_ - ry) * .08;
+    t += 0.008;
+    const ambient = Math.sin(t)*1.2;
+    rig.style.transform = `rotateX(${rx.toFixed(2)}deg) rotateY(${(ry+ambient).toFixed(2)}deg)`;
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* =======================================================
+   Thumb selector — swaps active jeans view
+   ======================================================= */
+(()=>{
+  const thumbs = document.querySelectorAll('.thumb');
+  const stage  = document.getElementById('stage');
+  const layers = document.querySelectorAll('.jeans-3d .layer');
+  const labels = ['FRONT','3/4','BACK','DETAIL'];
+  const crop   = stage.querySelector('.frame-crop');
+  thumbs.forEach(t=>{
+    t.addEventListener('click', ()=>{
+      thumbs.forEach(x=>x.classList.remove('active'));
+      t.classList.add('active');
+      const i = +t.dataset.v;
+      crop.textContent = `SKU — G01 / BFD / 26 · ${labels[i]}`;
+      layers.forEach(l => l.classList.toggle('active', +l.dataset.v === i));
+    });
+  });
+})();
+
+/* =======================================================
+   Time ticker in hero corner
+   ======================================================= */
+(()=>{
+  const el = document.querySelector('.hero-meta .right span:last-child');
+  if(!el) return;
+  const start = Date.now();
+  setInterval(()=>{
+    const s = Math.floor((Date.now()-start)/1000);
+    const m = String(Math.floor(s/60)).padStart(2,'0');
+    const ss = String(s%60).padStart(2,'0');
+    el.textContent = `00:${m}:${ss}`;
+  },1000);
+})();
 </script>
-
 </body>
 </html>
